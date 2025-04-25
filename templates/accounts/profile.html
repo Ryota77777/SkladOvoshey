@@ -1,0 +1,118 @@
+{% load static %}
+
+{% if user.is_authenticated %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #e0e0e0, #aab6bf);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #2e2e2e;
+            text-align: center;
+        }
+
+        p {
+            font-size: 16px;
+            color: #444;
+            margin-bottom: 12px;
+        }
+
+        .info-block {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .button-container a,
+        .button-container form {
+            flex: 1;
+        }
+
+        button {
+            background-color: #66bb6a;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #388e3c;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px 16px;
+            background: #ccc;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'home' %}" class="back-button">Главная</a>
+
+    <div class="container">
+        <h1>Личный кабинет</h1>
+
+        <div class="info-block">
+            <p><span class="label">Имя пользователя:</span> {{ user.username }}</p>
+            <p><span class="label">ФИО:</span> {{ user.profile.full_name }}</p>
+            <p><span class="label">Должность:</span> {{ user.profile.position }}</p>
+            <p><span class="label">Смена:</span> {{ user.profile.shift }}</p>
+            <p><span class="label">Обработано заказов:</span> {{ user.profile.orders_processed }}</p>
+        </div>
+
+        <div class="button-container">
+            <a href="{% url 'home' %}"><button>На главную</button></a>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Выйти</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+{% else %}
+<script>window.location.href = "{% url 'login' %}";</script>
+{% endif %}
+
+

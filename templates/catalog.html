@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Каталог</title>
+    <style>
+        body {
+            background-color: #f4f6f8;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .search-bar {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .search-bar input[type="text"] {
+            width: 320px;
+            padding: 10px 12px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #2c3e50;
+            color: #fff;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-bar button:hover {
+            background-color: #1a242f;
+        }
+        .catalog {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .catalog-item {
+            background-color: #f9f9f9;
+            border: 1px solid #e1e1e1;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 10px 0;
+            width: calc(48% - 10px);
+            box-sizing: border-box;
+        }
+        .catalog-item img {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+        .catalog-item h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #34495e;
+        }
+        .catalog-item p {
+            font-size: 15px;
+            margin: 4px 0;
+        }
+        .add-to-cart-button, .edit-button {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 16px;
+            font-size: 14px;
+            background-color: #2980b9;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart-button:hover, .edit-button:hover {
+            background-color: #1c5980;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            background-color: #7f8c8d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .back-button:hover {
+            background-color: #5c6e70;
+        }
+        .cart-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 14px;
+            background-color: #e74c3c;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 16px;
+            width: 44px;
+            height: 44px;
+            line-height: 28px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+        }
+        .cart-button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'home' %}" class="back-button">Главная</a>
+    <a href="/cart" class="cart-button">🛒</a>
+
+    <div class="container">
+        <h1>Каталог товаров</h1>
+        <div class="search-bar">
+            <form method="get" action="{% url 'catalog' %}">
+                <input type="text" name="q" placeholder="Поиск по товарам..." value="{{ request.GET.q }}">
+                <button type="submit">Поиск</button>
+            </form>
+        </div>
+        <div class="catalog">
+            {% if goods %}
+                {% for good in goods %}
+                    <div class="catalog-item">
+                        <img src="{{ good.cover_image.url }}" alt="{{ good.name }}">
+                        <h2>{{ good.name }}</h2>
+                        <p><strong>Бренд:</strong> {{ good.brand }}</p>
+                        <p><strong>Описание:</strong> {{ good.description }}</p>
+                        <p><strong>Цена:</strong> {{ good.price }} ₽</p>
+                        <p><strong>Дата:</strong> {{ good.dates }}</p>
+
+                        <div id="cart-controls-{{ good.id }}">
+                            <button class="add-to-cart-button" onclick="addToCart({{ good.id }})">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center; font-size: 18px; color: #c0392b;">Ничего не найдено</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function updateCartUI(productId, quantity) {
+            let container = document.getElementById("cart-controls-" + productId);
+            if (quantity > 0) {
+                container.innerHTML = `
+                    <button onclick="changeQuantity(${productId}, -1)">-</button>
+                    <span id="cart-count-${productId}">${quantity}</span>
+                    <button onclick="changeQuantity(${productId}, 1)">+</button>
+                `;
+            } else {
+                container.innerHTML = `
+                    <button class="add-to-cart-button" onclick="addToCart(${productId})">
+                        Добавить в корзину
+                    </button>
+                `;
+            }
+        }
+
+        function addToCart(productId) {
+            fetch(`/add_to_cart/${productId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateCartUI(productId, data.product_count);
+                    }
+                });
+        }
+
+        function changeQuantity(productId, change) {
+            fetch(`/update_cart/${productId}/?change=${change}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateCartUI(productId, data.product_count);
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

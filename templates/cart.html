@@ -1,0 +1,137 @@
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <style>
+        body {
+            background-color: #f4f6f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        .cart-items {
+            list-style: none;
+            padding: 0;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fafafa;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .cart-item img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 25px;
+        }
+        .cart-item-info {
+            flex-grow: 1;
+        }
+        .cart-item-info h3 {
+            margin: 0 0 8px;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+        .cart-item-info p {
+            margin: 4px 0;
+            color: #555;
+            font-size: 14px;
+        }
+        .cart-item-price {
+            min-width: 120px;
+            text-align: right;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+        .total-price {
+            font-size: 18px;
+            font-weight: 600;
+            text-align: right;
+            color: #2c3e50;
+            margin-top: 30px;
+        }
+        .action-buttons {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .action-buttons a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #1e88e5;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: background-color 0.3s;
+        }
+        .action-buttons a:hover {
+            background-color: #1565c0;
+        }
+        .empty-message {
+            text-align: center;
+            font-size: 16px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Корзина</h1>
+        {% if items %}
+            <ul class="cart-items">
+                {% for item in items %}
+                <li class="cart-item">
+                    <img src="{{ item.good.cover_image.url }}" alt="{{ item.good.name }}">
+                    <div class="cart-item-info">
+                        <h3>{{ item.good.name }}</h3>
+                        <p>Бренд: {{ item.good.brand }}</p>
+                        <p>Цена: {{ item.good.price }} руб.</p>
+                        <p>Количество: {{ item.quantity }}</p>
+                    </div>
+                    <div class="cart-item-price">
+                        {{ item.good.price|multiply:item.quantity }} руб.
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="total-price">
+                Общая стоимость: {{ total_price }} руб.
+            </div>
+            <div class="action-buttons">
+                <a href="{% url 'checkout' %}">Оформить заказ</a>
+            </div>
+        {% else %}
+            <p class="empty-message">Ваша корзина пуста.</p>
+        {% endif %}
+        <div class="action-buttons" style="margin-top: 20px;">
+            <a href="{% url 'catalog' %}">Вернуться в каталог</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

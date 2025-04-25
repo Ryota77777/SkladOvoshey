@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Оптовый склад овощей и фруктов</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            background-color: #fff;
+        }
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+            margin-bottom: 30px;
+        }
+        nav {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #2e7d32;
+            padding: 10px 18px;
+            margin: 0 8px;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        nav a:hover {
+            background-color: #1b5e20;
+        }
+        .info-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .card {
+            flex: 1;
+            min-width: 250px;
+            margin: 10px;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-left: 5px solid #388e3c;
+            border-radius: 5px;
+        }
+        .card h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #2e7d32;
+        }
+        .card p {
+            font-size: 14px;
+            margin: 0;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            background-color: #f1f8e9;
+            padding: 15px 20px;
+            border-radius: 5px;
+            flex: 1;
+            min-width: 180px;
+        }
+        .stat-box h3 {
+            margin: 0 0 5px;
+            font-size: 16px;
+        }
+        .stat-box span {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Оптовый склад овощей и фруктов</h1>
+
+        <nav>
+            <a href="{% url 'catalog' %}">Каталог</a>
+            <a href="{% url 'cart' %}">Корзина</a>
+            <a href="{% url 'order_history' %}">Заказы</a>
+            <a href="{% url 'personal_cabinet' %}">Кабинет</a>
+        </nav>
+
+        <div class="info-panel">
+            <div class="card">
+                <h2>Добавить новый товар</h2>
+                <p>Заполните форму и пополните склад.</p>
+            </div>
+            <div class="card">
+                <h2>Просмотр заказов</h2>
+                <p>Узнайте, какие заказы ожидают обработки.</p>
+            </div>
+            <div class="card">
+                <h2>Остатки на складе</h2>
+                <p>Актуальная информация по всем позициям.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Статистика</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <h3>Всего товаров</h3>
+                    <span>126</span>
+                </div>
+                <div class="stat-box">
+                    <h3>Заказов в обработке</h3>
+                    <span>8</span>
+                </div>
+                <div class="stat-box">
+                    <h3>Доставлено</h3>
+                    <span>234</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Последние заказы</h2>
+            <ul>
+                <li>Заказ #1023 – 12.04.2025 – В обработке</li>
+                <li>Заказ #1022 – 11.04.2025 – Отправлен</li>
+                <li>Заказ #1021 – 10.04.2025 – Доставлен</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

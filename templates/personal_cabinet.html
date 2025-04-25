@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <a href="{% url 'home' %}"><button class="back-button">Главная</button></a>
+    <div class="container">
+        <h1>Добро пожаловать в личный кабинет</h1>
+        <p>Войдите в свою учетную запись или зарегистрируйтесь для получения доступа к дополнительным возможностям:</p>
+        <ul>
+            <li>Получите доступ к эксклюзивным предложениям и акциям</li>
+            <li>Следите за состоянием вашего аккаунта</li>
+            <li>Быстрое оформление заказов</li>
+            <li>И многое другое</li>
+        </ul>
+        <div class="button-container">
+            <a href="{% url 'login' %}"><button class="login-button">Войти</button></a>
+            <a href="{% url 'register' %}"><button class="register-button">Зарегистрироваться</button></a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

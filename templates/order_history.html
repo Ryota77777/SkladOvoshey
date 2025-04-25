@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История заказов</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #e0f2f1, #b2dfdb); /* Более нейтральный фон */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .order-list {
+            list-style: none;
+            padding: 0;
+        }
+        .order-item {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+        }
+        .order-item h3 {
+            margin: 0 0 10px 0;
+            color: #34495e;
+        }
+        .order-item p {
+            color: #555;
+            margin: 4px 0;
+        }
+        .order-details {
+            margin-top: 15px;
+            background-color: #e3f2fd;
+            padding: 12px;
+            border-radius: 6px;
+        }
+        .order-details ul {
+            margin: 10px 0 0 20px;
+            padding: 0;
+        }
+        .action-buttons {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .action-buttons a {
+            padding: 12px 24px;
+            background-color: #00796b;
+            color: #fff;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .action-buttons a:hover {
+            background-color: #004d40;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Заказы</h1>
+        {% if orders %}
+            <ul class="order-list">
+                {% for order in orders %}
+                <li class="order-item">
+                    <h3>Заказ №{{ order.id }} — {{ order.created_at }}</h3>
+                    <p><strong>Текущий статус:</strong> {{ order.status }}</p>
+                    <div class="order-details">
+                        <p><strong>Сумма заказа:</strong> {{ order.total_price }} руб.</p>
+                        <p><strong>Состав заказа:</strong></p>
+                        <ul>
+                            {% for item in order.items.all %}
+                                <li>{{ item.good.name }} — {{ item.quantity }} шт. по {{ item.good.price }} руб.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="text-align: center; color: #777;">На текущий момент у вас нет оформленных заказов.</p>
+        {% endif %}
+        <div class="action-buttons">
+            <a href="{% url 'catalog' %}">Перейти в каталог товаров</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
