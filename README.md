@@ -61,7 +61,6 @@
 ### Корзина
 ![Скриншот корзины](https://github.com/Ryota77777/ModuleAppDataBase1/blob/main/templates/card.jpg?raw=true)
 
-```
 
 ## Безопасность и доступ
 
