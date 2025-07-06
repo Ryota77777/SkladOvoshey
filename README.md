@@ -50,16 +50,16 @@
 ## Скриншоты
 
 ### Главная страница
-![Скриншот главной страницы](https://github.com/Ryota77777/ModuleAppDataBase1/blob/main/templates/main2.jpg?raw=true)
+![Скриншот главной страницы](https://github.com/Ryota77777/SkladOvoshey/blob/main/templates/main2.jpg?raw=true)
 
 ### Каталог
-![Скриншот каталога товаров](https://github.com/Ryota77777/ModuleAppDataBase1/blob/main/templates/catalog.jpg?raw=true)
+![Скриншот каталога товаров](https://github.com/Ryota77777/SkladOvoshey/blob/main/templates/catalog.jpg?raw=true)
 
 ### Заказы
-![Скриншот страницы заказов](https://github.com/Ryota77777/ModuleAppDataBase1/blob/main/templates/orders.jpg?raw=true)
+![Скриншот страницы заказов](https://github.com/Ryota77777/SkladOvoshey/blob/main/templates/orders.jpg?raw=true)
 
 ### Корзина
-![Скриншот корзины](https://github.com/Ryota77777/ModuleAppDataBase1/blob/main/templates/card.jpg?raw=true)
+![Скриншот корзины](https://github.com/Ryota77777/SkladOvoshey/blob/main/templates/card.jpg?raw=true)
 
 
 ## Безопасность и доступ
@@ -96,3 +96,7 @@ python manage.py migrate
 python manage.py createsuperuser  # для доступа к админке
 python manage.py runserver
 ```
+
+## Лицензия
+
+MIT
